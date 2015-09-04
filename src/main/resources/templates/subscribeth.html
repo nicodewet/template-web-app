@@ -1,45 +1,52 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
 
-  <head>
-    <title>Spring MVC view layer: Thymeleaf vs. JSP</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all" href="../static/thvsjsp.css" th:href="@{/css/thvsjsp.css}"/>
-  </head>
+<head>
+    <title>Template Web App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/1.11.1/jquery.min.js" th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+    <link href="../static/css/core.css" th:href="@{/css/core.css}"
+          rel="stylesheet" media="screen" />
+</head>
+<body>
+<!-- Header -->
+<div th:replace="fragments/header :: header" ></div>
 
-  <body>
-
-    <h2>This is a Thymeleaf template</h2>
-
-    <form action="#" th:object="${subscription}" th:action="@{/subscribeth}">
-      
-      <fieldset>
-      
-        <div>
-          <label for="email" th:text="#{subscription.email}">Email: </label>
-          <input type="text" th:field="*{email}" />
-        </div>
-        <div>
-          <label th:text="#{subscription.type}">Type: </label>
-          <ul>
-            <li th:each="type : ${allTypes}">
-              <input type="radio" th:field="*{subscriptionType}" th:value="${type}" />
-              <label th:for="${#ids.prev('subscriptionType')}" 
-                     th:text="#{'subscriptionType.'+${type}}">First type</label>
-            </li>
-            <li th:remove="all"><input type="radio" /> <label>Second Type</label></li>
-          </ul>
-        </div>
-
-        <div class="submit">
-          <button type="submit" name="save" th:text="#{subscription.submit}">Subscribe me!</button>
-        </div>
-      
-      </fieldset>
-      
-    </form>
-
-  </body>
-  
+<!-- Container -->
+<div class="container">  
+	<div>
+		<h1 th:text="#{subscription.subscribe}"></h1> 
+		
+    	<form role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}">
+			<fieldset>
+        		<div class="form-group">
+          			<label for="email" th:text="#{subscription.email}">Email: </label>
+          			<input type="text" class="form-control" id="email" th:field="*{email}" />
+        		</div>
+        		<div class="form-group">
+          			<label th:text="#{subscription.type}">Type: </label>
+          			
+            			<div class="radio" th:each="type : ${allTypes}">
+              				<input type="radio" th:field="*{subscriptionType}" th:value="${type}" />
+              				<label th:for="${#ids.prev('subscriptionType')}" 
+                     			th:text="#{'subscriptionType.'+${type}}">First type</label>
+            			</div>
+            			<div class="radio" th:remove="all"><input type="radio" /> <label>Second Type</label></div>
+          			
+        		</div>
+        		
+          		<button type="submit" name="save" class="btn btn-default" th:text="#{subscription.submit}">Subscribe me!</button>
+        		
+      		</fieldset>
+    	</form>
+    	
+    </div>
+    <footer>
+        <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
+    </footer>
+</div>
+</body>
 </html>
