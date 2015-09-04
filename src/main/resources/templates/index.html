@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Hello Spring Boot!</title>
+    <title>Template Web App</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <script src="http://cdn.jsdelivr.net/webjars/jquery/1.11.1/jquery.min.js" th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
     <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
@@ -18,14 +18,10 @@
 <!-- Container -->
 <div class="container">
     <div class="hero-unit">
-        <h1 th:text="#{welcome}"></h1>
-        <p>Language : <a href="?language=en">English</a>|<a href="?language=es">Spanish</a></p>
+        <h1 th:text="#{welcome}"></h1>        
         <p>
             Welcome to the Template Web App!
-        </p>
-        <p>
-            <a href="subscribe.html" th:href="@{/subscribeth}">Thymeleaf version</a>
-        </p>
+        </p>       
         <p>
             <a href="#" th:href="@{properties}" class="btn btn-large btn-success">System Properties</a>
         </p>
