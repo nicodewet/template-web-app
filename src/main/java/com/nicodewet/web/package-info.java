@@ -4,4 +4,4 @@
  * 
  * See the THYMELEAF copyright notice contained in each class. 
  */
-package thymeleafexamples.thvsjsp.business.entities;
+package com.nicodewet.web;

@@ -17,7 +17,7 @@
  * 
  * =============================================================================
  */
-package thymeleafexamples.thvsjsp.business.entities;
+package com.nicodewet.domain;
 
 public enum SubscriptionType {
 

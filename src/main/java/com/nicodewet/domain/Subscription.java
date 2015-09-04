@@ -17,7 +17,8 @@
  * 
  * =============================================================================
  */
-package thymeleafexamples.thvsjsp.business.entities;
+package com.nicodewet.domain;
+
 
 public class Subscription {
 

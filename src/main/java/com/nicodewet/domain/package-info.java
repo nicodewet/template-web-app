@@ -4,4 +4,4 @@
  * 
  * See the THYMELEAF copyright notice contained in each class. 
  */
-package thymeleafexamples.thvsjsp.web.controller;
+package com.nicodewet.domain;
