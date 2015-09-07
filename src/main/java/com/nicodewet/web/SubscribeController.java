@@ -19,13 +19,13 @@
  */
 package com.nicodewet.web;
 
+import javax.validation.Valid;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.nicodewet.domain.Subscription;
 import com.nicodewet.domain.SubscriptionType;
 
@@ -49,13 +49,14 @@ public class SubscribeController {
     }
 
     @RequestMapping(value="/subscribeth", params={"save"})
-    public String subscribe(final Subscription subscription, final BindingResult bindingResult, final ModelMap model) {
+    public String subscribe(@Valid final Subscription subscription, final BindingResult bindingResult, final ModelMap model) {
         if (bindingResult.hasErrors()) {
             return "subscribeth";
+        } else {        	
+        	log.info("JUST ADDED SUBSCRIPTION: " + subscription);
+        	model.clear();
+        	return "redirect:/subscribeth";
         }
-        log.info("JUST ADDED SUBSCRIPTION: " + subscription);
-        model.clear();
-        return "redirect:/subscribeth";
     }
 
 }

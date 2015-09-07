@@ -19,44 +19,39 @@
  */
 package com.nicodewet.domain;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 
 public class Subscription {
 
     private String email;
     private SubscriptionType subscriptionType = SubscriptionType.ALL_EMAILS;
     
-    
     public Subscription() {
         super();
     }
 
-
+    @NotEmpty
+    @Email
     public String getEmail() {
         return this.email;
     }
-
 
     public void setEmail(final String email) {
         this.email = email;
     }
 
-
     public SubscriptionType getSubscriptionType() {
         return this.subscriptionType;
     }
-
 
     public void setSubscriptionType(final SubscriptionType subscriptionType) {
         this.subscriptionType = subscriptionType;
     }
 
-
     @Override
     public String toString() {
         return "Subscription [email=" + this.email + ", subscriptionType="
                 + this.subscriptionType + "]";
-    }
-    
-    
+    }   
 }
-
