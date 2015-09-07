@@ -22,15 +22,19 @@
 		
     	<form role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
 		
+			<!--/*--> 
+			DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors must be displayed
+			without requiring Javascript.
+			<!--*/-->
         	<div class="form-group has-feedback" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
           		<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
           		<div class="col-xs-10 col-sm-4">
-          			 <div class="input-group">
+          			<div class="input-group">
         				<span class="input-group-addon">@</span>
-          				<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}" aria-describedby="inputSuccess3Status"/>    
+          				<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}"/>    
           			</div>
-          			<span class="glyphicon form-control-feedback" aria-hidden="true" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>
-      				<span id="inputSuccess3Status" class="sr-only">(success)</span>      			     		
+          			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>      				   	
+      				<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>	     		
           		</div>
         	</div>
         	
