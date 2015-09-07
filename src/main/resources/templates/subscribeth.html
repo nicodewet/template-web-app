@@ -22,10 +22,15 @@
 		
     	<form role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
 		
-        	<div class="form-group" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+        	<div class="form-group has-feedback" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
           		<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
           		<div class="col-xs-10 col-sm-4">
-          			<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}" />
+          			 <div class="input-group">
+        				<span class="input-group-addon">@</span>
+          				<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}" aria-describedby="inputSuccess3Status"/>    
+          			</div>
+          			<span class="glyphicon form-control-feedback" aria-hidden="true" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>
+      				<span id="inputSuccess3Status" class="sr-only">(success)</span>      			     		
           		</div>
         	</div>
         	
