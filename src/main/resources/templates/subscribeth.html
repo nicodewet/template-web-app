@@ -15,18 +15,60 @@
 <!-- Header -->
 <div th:replace="fragments/header :: header" ></div>
 
+<script>
+/*<![CDATA[*/
+function collectFormData($fields) {
+    var data = {};
+    for (var i = 0; i < $fields.length; i++) {
+        var item = $($fields[i]);
+        data[item.attr("id")] = item.val();
+    }
+    return data;
+}
+$(document).ready(function() {
+    var $form = $("form[name='subscribe-form']");
+    $form.bind("submit", function(e) {
+    	
+   		$('.form-group').removeClass('has-error'); // remove the error class
+		$('.help-block').remove(); // remove the error text
+    	
+    	// Ajax validation
+        var $fields = $form.find("input");
+        var data = collectFormData($fields);
+
+        var validationUrl = "subscribeth.json";
+        $.post(validationUrl, data, function(response) {
+        	if (response.status == 'FAIL') {
+				for (var i = 0; i < response.errorMessageList.length; i++) {
+					var item = response.errorMessageList[i];
+					var $formGroup = $('#' + item.fieldName + '-form-group');
+					$formGroup.addClass('has-error');
+					$formGroup.append('<div class="help-block">' + item.message + '</div>');					
+				}
+			} else {
+				$form.unbind('submit');
+				$form.submit();
+			}
+        }, "json");
+
+        e.preventDefault();
+        return false;
+    });
+});
+/*]]>*/
+</script>
 <!-- Container -->
 <div class="container">  
 	<div>
 		<h1 th:text="#{subscription.subscribe}"></h1> 
 		
-    	<form role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
+    	<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
 		
 			<!--/*--> 
 			DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors must be displayed
 			without requiring Javascript.
 			<!--*/-->
-        	<div class="form-group has-feedback" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+        	<div id="email-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
           		<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
           		<div class="col-xs-10 col-sm-4">
           			<div class="input-group">
@@ -34,7 +76,8 @@
           				<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}"/>    
           			</div>
           			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>      				   	
-      				<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>	     		
+      				<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>	     
+      				<span class="help-block"></span>		
           		</div>
         	</div>
         	
