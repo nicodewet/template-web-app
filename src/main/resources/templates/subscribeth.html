@@ -41,9 +41,10 @@ $(document).ready(function() {
         	if (response.status == 'FAIL') {
 				for (var i = 0; i < response.errorMessageList.length; i++) {
 					var item = response.errorMessageList[i];
-					var $formGroup = $('#' + item.fieldName + '-form-group');
-					$formGroup.addClass('has-error');
-					$formGroup.append('<div class="help-block">' + item.message + '</div>');					
+					var $formGroupDiv = $('#' + item.fieldName + '-form-group');
+					var $formGroupClassDiv = $('#' + item.fieldName + '-form-group-col-div');
+					$formGroupDiv.addClass('has-error');
+					$formGroupClassDiv.append('<span class="help-block">' + item.message + '</div>');					
 				}
 			} else {
 				$form.unbind('submit');
@@ -65,26 +66,25 @@ $(document).ready(function() {
     	<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
 		
 			<!--/*--> 
-			DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors must be displayed
+			DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors MUST be displayed
 			without requiring Javascript.
 			<!--*/-->
         	<div id="email-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
           		<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
-          		<div class="col-xs-10 col-sm-4">
+          		<div id="email-form-group-col-div" class="col-xs-10 col-sm-4">
           			<div class="input-group">
         				<span class="input-group-addon">@</span>
-          				<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}"/>    
+          				<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}"/>
           			</div>
-          			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>      				   	
-      				<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>	     
-      				<span class="help-block"></span>		
+          			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>
+      				<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
           		</div>
         	</div>
         	
-        	<div class="form-group">
+        	<div id="type-form-group" class="form-group">
           		<label th:text="#{subscription.type}"  class="col-xs-2 control-label">Type: </label>
           		
-          		 <div class="col-xs-10">
+          		 <div id="type-form-group-col-div" class="col-xs-10">
             		<div class="radio" th:each="type : ${allTypes}">
               			<input type="radio" th:field="*{subscriptionType}" th:value="${type}" />
               			<label th:for="${#ids.prev('subscriptionType')}" 
