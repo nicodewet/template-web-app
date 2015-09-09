@@ -1,131 +1,26 @@
 ---
-tags: []
+tags: [resource-oriented architecture]
 projects: [spring-framework]
 ---
-:spring_version: current
-:spring_boot_version: 1.2.5.RELEASE
-:Component: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Component.html
-:Controller: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/stereotype/Controller.html
-:DispatcherServlet: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/DispatcherServlet.html
-:SpringApplication: http://docs.spring.io/spring-boot/docs/{spring_boot_version}/api/org/springframework/boot/SpringApplication.html
-:RequestParam: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/RequestParam.html
-:View: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/servlet/View.html
-:ResponseBody: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/web/bind/annotation/ResponseBody.html
-:Model: http://docs.spring.io/spring/docs/{spring_version}/javadoc-api/org/springframework/ui/Model.html
-:toc:
-:icons: font
-:source-highlighter: prettify
-:project_id: gs-serving-web-content
-This guide walks you through the process of creating a "hello world" web site with Spring.
 
-== What you'll build
+This solution provides a template "Hello World" web application with Spring MVC and friends.
 
-You'll build a service that will accept HTTP GET requests at:
+The "Hello World"-iness goes well beyond what the web application does, rather the template prescribes a way of working and includes matters such as exposing basic production-ready monitoring features.
 
-    http://localhost:8080/greeting
+The cited friends include:
 
-and respond with a web page displaying a greeting:
+* http://www.w3.org/TR/html5/[HTML5]
+* http://www.thymeleaf.org/[Thymeleaf] as HTML5 templating engine
+* http://blog.getbootstrap.com/2015/06/15/bootstrap-3-3-5-released/[Bootstrap v3.3.5]
+* http://docs.spring.io/spring-framework/docs/current/spring-framework-reference/html/mvc.html[Spring MVC v4.2.0]
 
-    "Hello, World!"
+Key template aspects include:
 
-You can customize the greeting with an optional `name` parameter in the query string:
+* An over-arching aspiration to adhere to http://roca-style.org/[Resource-Oriented Architecture] (ROCA) recommendations.
+* A https://en.wikipedia.org/wiki/Progressive_enhancement[progressive enhancement] validation strategy realized by server-side first validation using http://beanvalidation.org/1.0/spec/[JSR 303] annotations on form-backing objects - this means if we are constrained for time we will have no client-side validation which is treated as a convenience.
+* Asynchronous client-side validation is enabled by optionally exposing, for each form, a JSON based validation end-point.
+* Bootstrap's responsive, mobile first fluid grid system respected to make sure all devices are supported (i.e. extra small, small, medium and large devices).
+* Intentional avoidance of JSP, JSTL and the Spring tag libraries as per http://www.thymeleaf.org/doc/articles/thvsjsp.html[Spring MVC View Layer: Thymeleaf vs JSP].
+* Internationalization: support for English (for which https://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters[ASCII] would suffice) and at least one language that uses a character set with "funny" characters. This is a http://www.joelonsoftware.com/articles/Unicode.html[character encoding] lesson reminder.
 
-    http://localhost:8080/greeting?name=User
-
-The `name` parameter value overrides the default value of "World" and is reflected in the response:
-
-    "Hello, User!"
-
-
-== What you'll need
-
-:java_version: 1.8
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/prereq_editor_jdk_buildtools.adoc[]
-
-
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/how_to_complete_this_guide.adoc[]
-
-
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/hide-show-gradle.adoc[]
-
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/hide-show-maven.adoc[]
-
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/hide-show-sts.adoc[]
-
-
-
-[[initial]]
-== Create a web controller
-
-In Spring's approach to building web sites, HTTP requests are handled by a controller. You can easily identify these requests by the {Controller}[`@Controller`] annotation. In the following example, the GreetingController handles GET requests for /greeting by returning the name of a {View}[`View`], in this case, "greeting". A `View` is responsible for rendering the HTML content:
-
-`src/main/java/hello/GreetingController.java`
-[source,java]
-----
-include::complete/src/main/java/hello/GreetingController.java[]
-----
-
-This controller is concise and simple, but there's plenty going on. Let's break it down step by step.
-
-The `@RequestMapping` annotation ensures that HTTP requests to `/greeting` are mapped to the `greeting()` method.
-
-NOTE: The above example does not specify `GET` vs. `PUT`, `POST`, and so forth, because `@RequestMapping` maps all HTTP operations by default. Use `@RequestMapping(method=GET)` to narrow this mapping.
-
-{RequestParam}[`@RequestParam`] binds the value of the query String parameter `name` into the `name` parameter of the `greeting()` method. This query String parameter is not `required`; if it is absent in the request, the `defaultValue` of "World" is used. The value of the `name` parameter is added to a {Model}[`Model`] object, ultimately making it accessible to the view template.
-
-The implementation of the method body relies on a link:/understanding/view-templates[view technology], in this case http://www.thymeleaf.org/doc/html/Thymeleaf-Spring3.html[Thymeleaf], to perform server-side rendering of the HTML. Thymeleaf parses the `greeting.html` template below and evaluates the `th:text` expression to render the value of the `${name}` parameter that was set in the controller.
-
-`src/main/resources/templates/greeting.html`
-[source,html]
-----
-include::complete/src/main/resources/templates/greeting.html[]
-----
-
-
-== Make the application executable
-
-Although it is possible to package this service as a traditional link:/understanding/WAR[WAR] file for deployment to an external application server, the simpler approach demonstrated below creates a standalone application. You package everything in a single, executable JAR file, driven by a good old Java `main()` method. Along the way, you use Spring's support for embedding the link:/understanding/Tomcat[Tomcat] servlet container as the HTTP runtime, instead of deploying to an external instance.
-
-
-`src/main/java/hello/Application.java`
-[source,java]
-----
-include::complete/src/main/java/hello/Application.java[]
-----
-
-`@SpringBootApplication` is a convenience annotation that adds all of the following:
-    
-- `@Configuration` tags the class as a source of bean definitions for the application context.
-- `@EnableAutoConfiguration` tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings.
-- Normally you would add `@EnableWebMvc` for a Spring MVC app, but Spring Boot adds it automatically when it sees **spring-webmvc** on the classpath. This flags the application as a web application and activates key behaviors such as setting up a `DispatcherServlet`.
-- `@ComponentScan` tells Spring to look for other components, configurations, and services in the the `hello` package, allowing it to find the `HelloController`.
-
-The `main()` method uses Spring Boot's `SpringApplication.run()` method to launch an application. Did you notice that there wasn't a single line of XML? No **web.xml** file either. This web application is 100% pure Java and you didn't have to deal with configuring any plumbing or infrastructure.
-
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/build_an_executable_jar_subhead.adoc[]
-
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/build_an_executable_jar_with_both.adoc[]
-
-
-Logging output is displayed. The service should be up and running within a few seconds.
-
-
-== Test the service
-
-Now that the web site is running, visit http://localhost:8080/greeting, where you see:
-
-    "Hello, World!"
-
-Provide a `name` query string parameter with http://localhost:8080/greeting?name=User. Notice how the message changes from "Hello, World!" to "Hello, User!":
-
-    "Hello, User!"
-
-This change demonstrates that the {RequestParam}[`@RequestParam`] arrangement in `GreetingController` is working as expected. The `name` parameter has been given a default value of "World", but can always be explicitly overridden through the query string.
-
-
-== Summary
-
-Congratulations! You have just developed a web page using Spring.
-
-include::https://raw.githubusercontent.com/spring-guides/getting-started-macros/master/footer.adoc[]
 
