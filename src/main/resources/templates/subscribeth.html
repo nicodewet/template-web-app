@@ -27,32 +27,38 @@ function collectFormData($fields) {
 }
 $(document).ready(function() {
     var $form = $("form[name='subscribe-form']");
-    $form.bind("submit", function(e) {
+    $form.on("change", function(event) {
     	
-   		$('.form-group').removeClass('has-error'); // remove the error class
-		$('.help-block').remove(); // remove the error text
+    	<!-- remove the error class */-->
+   		$('.form-group').removeClass('has-error');
+   		<!-- remove the error text */-->
+		$('.help-block').remove(); 
+		<!-- remove glyphicon-remove */-->
+		$('.glyphicon-remove').remove();
     	
-    	// Ajax validation
+		<!-- AJAX VALIDATION */-->
         var $fields = $form.find("input");
         var data = collectFormData($fields);
 
         var validationUrl = "subscribeth.json";
         $.post(validationUrl, data, function(response) {
         	if (response.status == 'FAIL') {
+        		<!-- some fields may be valid, some not */-->
 				for (var i = 0; i < response.errorMessageList.length; i++) {
 					var item = response.errorMessageList[i];
+					
+					<!-- item.fieldName == event.target.id */-->					
 					var $formGroupDiv = $('#' + item.fieldName + '-form-group');
 					var $formGroupClassDiv = $('#' + item.fieldName + '-form-group-col-div');
 					$formGroupDiv.addClass('has-error');
-					$formGroupClassDiv.append('<span class="help-block">' + item.message + '</div>');					
+					$formGroupClassDiv.append('<span class="glyphicon form-control-feedback glyphicon-remove"></span>');
+					$formGroupClassDiv.append('<span class="help-block">' + item.message + '</div>');
 				}
-			} else {
-				$form.unbind('submit');
-				$form.submit();
-			}
+				
+			} 
         }, "json");
 
-        e.preventDefault();
+        event.preventDefault();
         return false;
     });
 });
@@ -69,6 +75,29 @@ $(document).ready(function() {
 			DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors MUST be displayed
 			without requiring Javascript.
 			<!--*/-->
+			
+			<div id="firstname-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
+      			<label for="firstname" th:text="#{subscription.firstname}" class="col-xs-2 col-sm-2 control-label">First name: </label>
+      			<div id="firstname-form-group-col-div" class="col-xs-10 col-sm-4">
+      				<div class="input-group">    			
+      					<input type="text" class="form-control" th:field="*{firstname}" th:placeholder="#{subscription.firstname}"/>
+      				</div>
+      			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'glyphicon-remove'"></span>
+  				<span class="help-block" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">First name</span>
+  				</div>
+      		</div>
+      		
+      		<div id="surname-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'has-error'">
+  				<label for="surname" th:text="#{subscription.surname}" class="col-xs-2 col-sm-2 control-label">Surname: </label>
+  				<div id="surname-form-group-col-div" class="col-xs-10 col-sm-4">
+  					<div class="input-group">    			
+  						<input type="text" class="form-control" th:field="*{surname}" th:placeholder="#{subscription.surname}"/>
+  					</div>
+  				<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'glyphicon-remove'"></span>
+				<span class="help-block" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname</span>
+				</div>
+			</div>
+			
         	<div id="email-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
           		<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
           		<div id="email-form-group-col-div" class="col-xs-10 col-sm-4">

@@ -24,7 +24,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class Subscription {
 
-    private String email;
+	private String firstname;
+	private String surname;
+	private String email;
     private SubscriptionType subscriptionType = SubscriptionType.ALL_EMAILS;
     
     public Subscription() {
@@ -40,6 +42,24 @@ public class Subscription {
     public void setEmail(final String email) {
         this.email = email;
     }
+    
+    @NotEmpty
+    public String getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	@NotEmpty
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
 
     public SubscriptionType getSubscriptionType() {
         return this.subscriptionType;
@@ -48,10 +68,10 @@ public class Subscription {
     public void setSubscriptionType(final SubscriptionType subscriptionType) {
         this.subscriptionType = subscriptionType;
     }
-
-    @Override
-    public String toString() {
-        return "Subscription [email=" + this.email + ", subscriptionType="
-                + this.subscriptionType + "]";
-    }   
+    
+	@Override
+	public String toString() {
+		return "Subscription [firstname=" + firstname + ", surname=" + surname + ", email=" + email
+				+ ", subscriptionType=" + subscriptionType + "]";
+	}
 }
