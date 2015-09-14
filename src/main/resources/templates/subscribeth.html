@@ -80,7 +80,7 @@ $(document).ready(function() {
       			<label for="firstname" th:text="#{subscription.firstname}" class="col-xs-2 col-sm-2 control-label">First name: </label>
       			<div id="firstname-form-group-col-div" class="col-xs-10 col-sm-4">
       				<div class="input-group">    	
-      					<span class="input-group-addon"></span>    
+      					<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>    
       					<input type="text" class="form-control" th:field="*{firstname}" th:placeholder="#{subscription.firstname}"/>
       				</div>
       			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'glyphicon-remove'"></span>
@@ -92,7 +92,7 @@ $(document).ready(function() {
   				<label for="surname" th:text="#{subscription.surname}" class="col-xs-2 col-sm-2 control-label">Surname: </label>
   				<div id="surname-form-group-col-div" class="col-xs-10 col-sm-4">
   					<div class="input-group">    
-  						<span class="input-group-addon"></span>    
+  						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>    
   						<input type="text" class="form-control" th:field="*{surname}" th:placeholder="#{subscription.surname}"/>
   					</div>
   				<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'glyphicon-remove'"></span>
@@ -113,7 +113,7 @@ $(document).ready(function() {
         	</div>
         	
         	<div id="type-form-group" class="form-group">
-          		<label th:text="#{subscription.type}"  class="col-xs-2 control-label">Type: </label>
+          		<label th:text="#{subscription.type}" class="col-xs-2 control-label">Type: </label>
           		
           		 <div id="type-form-group-col-div" class="col-xs-10">
             		<div class="radio" th:each="type : ${allTypes}">
@@ -124,6 +124,12 @@ $(document).ready(function() {
             		<div class="radio" th:remove="all"><input type="radio" /> <label>Second Type</label></div>
           		</div>	
         	</div>
+        	
+        	 <div class="form-group">
+        	 	<div id="firstname-form-group-col-div" class="col-xs-offset-2 col-xs-10">
+        	 		<span class="text-muted"><em><span style="color:red;">*</span> Indicates required field</em></span>
+        	    </div>
+        	  </div> 
         	
         	<div class="form-group">
     			<div class="col-xs-offset-2 col-xs-10">
