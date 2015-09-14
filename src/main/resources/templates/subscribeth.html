@@ -27,7 +27,13 @@ function collectFormData($fields) {
 }
 $(document).ready(function() {
     var $form = $("form[name='subscribe-form']");
+    var $fields = $form.find("input");
+    var jsChangeEvents = collectFormData($fields);
+    
     $form.on("change", function(event) {
+    	
+    	jsChangeEvents[event.target.id] = "fired";
+    	console.log(jsChangeEvents);
     	
     	<!-- remove the error class */-->
    		$('.form-group').removeClass('has-error');
@@ -37,7 +43,6 @@ $(document).ready(function() {
 		$('.glyphicon-remove').remove();
     	
 		<!-- AJAX VALIDATION */-->
-        var $fields = $form.find("input");
         var data = collectFormData($fields);
 
         var validationUrl = "subscribeth.json";
@@ -46,8 +51,7 @@ $(document).ready(function() {
         		<!-- some fields may be valid, some not */-->
 				for (var i = 0; i < response.errorMessageList.length; i++) {
 					var item = response.errorMessageList[i];
-					
-					<!-- item.fieldName == event.target.id */-->					
+					<!-- item.fieldName == event.target.id */-->
 					var $formGroupDiv = $('#' + item.fieldName + '-form-group');
 					var $formGroupClassDiv = $('#' + item.fieldName + '-form-group-col-div');
 					$formGroupDiv.addClass('has-error');
