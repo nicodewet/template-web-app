@@ -30,10 +30,9 @@ $(document).ready(function() {
     var $fields = $form.find("input");
     var jsChangeEvents = collectFormData($fields);
     
-    $form.on("change", function(event) {
+    $form.on("focusout", function(event) {
     	
     	jsChangeEvents[event.target.id] = "fired";
-    	console.log(jsChangeEvents);
     	
     	<!-- remove the error class */-->
    		$('.form-group').removeClass('has-error');
@@ -51,12 +50,14 @@ $(document).ready(function() {
         		<!-- some fields may be valid, some not */-->
 				for (var i = 0; i < response.errorMessageList.length; i++) {
 					var item = response.errorMessageList[i];
-					<!-- item.fieldName == event.target.id */-->
-					var $formGroupDiv = $('#' + item.fieldName + '-form-group');
-					var $formGroupClassDiv = $('#' + item.fieldName + '-form-group-col-div');
-					$formGroupDiv.addClass('has-error');
-					$formGroupClassDiv.append('<span class="glyphicon form-control-feedback glyphicon-remove"></span>');
-					$formGroupClassDiv.append('<span class="help-block">' + item.message + '</div>');
+					console.log(jsChangeEvents[item.fieldName]);
+					if ( (item.fieldName == event.target.id) || (jsChangeEvents[item.fieldName] == "fired")) {
+						var $formGroupDiv = $('#' + item.fieldName + '-form-group');
+						var $formGroupClassDiv = $('#' + item.fieldName + '-form-group-col-div');
+						$formGroupDiv.addClass('has-error');
+						$formGroupClassDiv.append('<span class="glyphicon form-control-feedback glyphicon-remove"></span>');
+						$formGroupClassDiv.append('<span class="help-block">' + item.message + '</div>');
+					}
 				}
 				
 			} 
