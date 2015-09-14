@@ -79,7 +79,8 @@ $(document).ready(function() {
 			<div id="firstname-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
       			<label for="firstname" th:text="#{subscription.firstname}" class="col-xs-2 col-sm-2 control-label">First name: </label>
       			<div id="firstname-form-group-col-div" class="col-xs-10 col-sm-4">
-      				<div class="input-group">    			
+      				<div class="input-group">    	
+      					<span class="input-group-addon"></span>    
       					<input type="text" class="form-control" th:field="*{firstname}" th:placeholder="#{subscription.firstname}"/>
       				</div>
       			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'glyphicon-remove'"></span>
@@ -90,7 +91,8 @@ $(document).ready(function() {
       		<div id="surname-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'has-error'">
   				<label for="surname" th:text="#{subscription.surname}" class="col-xs-2 col-sm-2 control-label">Surname: </label>
   				<div id="surname-form-group-col-div" class="col-xs-10 col-sm-4">
-  					<div class="input-group">    			
+  					<div class="input-group">    
+  						<span class="input-group-addon"></span>    
   						<input type="text" class="form-control" th:field="*{surname}" th:placeholder="#{subscription.surname}"/>
   					</div>
   				<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'glyphicon-remove'"></span>
