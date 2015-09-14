@@ -7,3 +7,7 @@ td {
 	word-wrap:break-word;
 	word-break:break-word;
 }
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}

@@ -81,7 +81,7 @@ $(document).ready(function() {
 			without requiring Javascript.
 			<!--*/-->
 			
-			<div id="firstname-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
+			<div id="firstname-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
       			<label for="firstname" th:text="#{subscription.firstname}" class="col-xs-2 col-sm-2 control-label">First name: </label>
       			<div id="firstname-form-group-col-div" class="col-xs-10 col-sm-4">
       				<div class="input-group">    	
@@ -93,7 +93,7 @@ $(document).ready(function() {
   				</div>
       		</div>
       		
-      		<div id="surname-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'has-error'">
+      		<div id="surname-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('surname')} ? 'has-error'">
   				<label for="surname" th:text="#{subscription.surname}" class="col-xs-2 col-sm-2 control-label">Surname: </label>
   				<div id="surname-form-group-col-div" class="col-xs-10 col-sm-4">
   					<div class="input-group">    
@@ -105,7 +105,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 			
-        	<div id="email-form-group" class="form-group has-feedback" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+        	<div id="email-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
           		<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
           		<div id="email-form-group-col-div" class="col-xs-10 col-sm-4">
           			<div class="input-group">
