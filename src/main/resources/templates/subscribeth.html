@@ -71,79 +71,82 @@ $(document).ready(function() {
 </script>
 <!-- Container -->
 <div class="container">  
-	<div>
-		<h1 th:text="#{subscription.subscribe}"></h1> 
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h1 th:text="#{subscription.subscribe}" class="panel-title">Subscribe</h1>
+		</div>
+		<div class="panel-body">
+				
+    		<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
 		
-    	<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
-		
-			<!--/*--> 
-			DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors MUST be displayed
-			without requiring Javascript.
-			<!--*/-->
+				<!--/*--> 
+				DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors MUST be displayed
+				without requiring Javascript.
+				<!--*/-->
 			
-			<div id="firstname-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
-      			<label for="firstname" th:text="#{subscription.firstname}" class="col-xs-2 col-sm-2 control-label">First name: </label>
-      			<div id="firstname-form-group-col-div" class="col-xs-10 col-sm-4">
-      				<div class="input-group">    	
-      					<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>    
-      					<input type="text" class="form-control" th:field="*{firstname}" th:placeholder="#{subscription.firstname}"/>
+				<div id="firstname-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
+      				<label for="firstname" th:text="#{subscription.firstname}" class="col-xs-2 col-sm-2 control-label">First name: </label>
+      				<div id="firstname-form-group-col-div" class="col-xs-10 col-sm-4">
+      					<div class="input-group">    	
+      						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>    
+      						<input type="text" class="form-control" th:field="*{firstname}" th:placeholder="#{subscription.firstname}"/>
+      					</div>
+      					<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'glyphicon-remove'"></span>
+      					<span class="help-block" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">First name</span>
       				</div>
-      			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'glyphicon-remove'"></span>
-  				<span class="help-block" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">First name</span>
-  				</div>
-      		</div>
+      			</div>
       		
-      		<div id="surname-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('surname')} ? 'has-error'">
-  				<label for="surname" th:text="#{subscription.surname}" class="col-xs-2 col-sm-2 control-label">Surname: </label>
-  				<div id="surname-form-group-col-div" class="col-xs-10 col-sm-4">
-  					<div class="input-group">    
-  						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>    
-  						<input type="text" class="form-control" th:field="*{surname}" th:placeholder="#{subscription.surname}"/>
+      			<div id="surname-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('surname')} ? 'has-error'">
+  					<label for="surname" th:text="#{subscription.surname}" class="col-xs-2 col-sm-2 control-label">Surname: </label>
+  					<div id="surname-form-group-col-div" class="col-xs-10 col-sm-4">
+  						<div class="input-group">    
+  							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>    
+  							<input type="text" class="form-control" th:field="*{surname}" th:placeholder="#{subscription.surname}"/>
+  						</div>
+  						<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'glyphicon-remove'"></span>
+  						<span class="help-block" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname</span>
   					</div>
-  				<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'glyphicon-remove'"></span>
-				<span class="help-block" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname</span>
-				</div>
-			</div>
+  				</div>
 			
-        	<div id="email-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
-          		<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
-          		<div id="email-form-group-col-div" class="col-xs-10 col-sm-4">
-          			<div class="input-group">
-        				<span class="input-group-addon">@</span>
-          				<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}"/>
+  				<div id="email-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+          			<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
+          			<div id="email-form-group-col-div" class="col-xs-10 col-sm-4">
+          				<div class="input-group">
+          					<span class="input-group-addon">@</span>
+          					<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}"/>
+          				</div>
+          				<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>
+          				<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
           			</div>
-          			<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>
-      				<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
           		</div>
-        	</div>
         	
-        	<div id="type-form-group" class="form-group">
-          		<label th:text="#{subscription.type}" class="col-xs-2 control-label">Type: </label>
+          		<div id="type-form-group" class="form-group">
+          			<label th:text="#{subscription.type}" class="col-xs-2 control-label">Type: </label>
           		
-          		 <div id="type-form-group-col-div" class="col-xs-10">
-            		<div class="radio" th:each="type : ${allTypes}">
-              			<input type="radio" th:field="*{subscriptionType}" th:value="${type}" />
-              			<label th:for="${#ids.prev('subscriptionType')}" 
-                     			th:text="#{'subscriptionType.'+${type}}">First type</label>
-            		</div>
-            		<div class="radio" th:remove="all"><input type="radio" /> <label>Second Type</label></div>
-          		</div>	
-        	</div>
+          			<div id="type-form-group-col-div" class="col-xs-10">
+          				<div class="radio" th:each="type : ${allTypes}">
+              				<input type="radio" th:field="*{subscriptionType}" th:value="${type}" />
+              					<label th:for="${#ids.prev('subscriptionType')}" 
+              						th:text="#{'subscriptionType.'+${type}}">First type</label>
+              			</div>
+              			<div class="radio" th:remove="all"><input type="radio" /> <label>Second Type</label></div>
+              		</div>	
+              	</div>
         	
-        	 <div class="form-group">
-        	 	<div id="firstname-form-group-col-div" class="col-xs-offset-2 col-xs-10">
-        	 		<span class="text-muted"><em><span style="color:red;">*</span> Indicates required field</em></span>
-        	    </div>
-        	  </div> 
+              	<div class="form-group">
+              		<div id="firstname-form-group-col-div" class="col-xs-offset-2 col-xs-10">
+              			<span class="text-muted"><em><span style="color:red;">*</span> Indicates required field</em></span>
+              		</div>
+              	</div> 
         	
-        	<div class="form-group">
-    			<div class="col-xs-offset-2 col-xs-10">
-      				<button type="submit" name="save" class="btn btn-large btn-success" th:text="#{subscription.submit}">Subscribe me!</button>
-    			</div>
-  			</div>
+              	<div class="form-group">
+              		<div class="col-xs-offset-2 col-xs-10">
+      					<button type="submit" name="save" class="btn btn-large btn-success" th:text="#{subscription.submit}">Subscribe me!</button>
+      				</div>
+      			</div>
         		
-    	</form>
-    	
+      		</form>
+    	</div>    	
     </div>
     <footer>
         <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
