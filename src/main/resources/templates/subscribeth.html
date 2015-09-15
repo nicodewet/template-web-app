@@ -14,61 +14,6 @@
 <body>
 <!-- Header -->
 <div th:replace="fragments/header :: header" ></div>
-
-<script>
-/*<![CDATA[*/
-function collectFormData($fields) {
-    var data = {};
-    for (var i = 0; i < $fields.length; i++) {
-        var item = $($fields[i]);
-        data[item.attr("id")] = item.val();
-    }
-    return data;
-}
-$(document).ready(function() {
-    var $form = $("form[name='subscribe-form']");
-    var $fields = $form.find("input");
-    var jsChangeEvents = collectFormData($fields);
-    
-    $form.on("focusout", function(event) {
-    	
-    	jsChangeEvents[event.target.id] = "fired";
-    	
-    	<!-- remove the error class */-->
-   		$('.form-group').removeClass('has-error');
-   		<!-- remove the error text */-->
-		$('.help-block').remove(); 
-		<!-- remove glyphicon-remove */-->
-		$('.glyphicon-remove').remove();
-    	
-		<!-- AJAX VALIDATION */-->
-        var data = collectFormData($fields);
-
-        var validationUrl = "subscribeth.json";
-        $.post(validationUrl, data, function(response) {
-        	if (response.status == 'FAIL') {
-        		<!-- some fields may be valid, some not */-->
-				for (var i = 0; i < response.errorMessageList.length; i++) {
-					var item = response.errorMessageList[i];
-					console.log(jsChangeEvents[item.fieldName]);
-					if ( (item.fieldName == event.target.id) || (jsChangeEvents[item.fieldName] == "fired")) {
-						var $formGroupDiv = $('#' + item.fieldName + '-form-group');
-						var $formGroupClassDiv = $('#' + item.fieldName + '-form-group-col-div');
-						$formGroupDiv.addClass('has-error');
-						$formGroupClassDiv.append('<span class="glyphicon form-control-feedback glyphicon-remove"></span>');
-						$formGroupClassDiv.append('<span class="help-block">' + item.message + '</div>');
-					}
-				}
-				
-			} 
-        }, "json");
-
-        event.preventDefault();
-        return false;
-    });
-});
-/*]]>*/
-</script>
 <!-- Container -->
 <div class="container">  
 	<div class="panel panel-primary">
@@ -152,5 +97,59 @@ $(document).ready(function() {
         <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
     </footer>
 </div>
+<script>
+/*<![CDATA[*/
+function collectFormData($fields) {
+    var data = {};
+    for (var i = 0; i < $fields.length; i++) {
+        var item = $($fields[i]);
+        data[item.attr("id")] = item.val();
+    }
+    return data;
+}
+$(document).ready(function() {
+    var $form = $("form[name='subscribe-form']");
+    var $fields = $form.find("input");
+    var jsChangeEvents = collectFormData($fields);
+    
+    $form.on("focusout", function(event) {
+    	
+    	jsChangeEvents[event.target.id] = "fired";
+    	
+    	<!-- remove the error class */-->
+   		$('.form-group').removeClass('has-error');
+   		<!-- remove the error text */-->
+		$('.help-block').remove(); 
+		<!-- remove glyphicon-remove */-->
+		$('.glyphicon-remove').remove();
+    	
+		<!-- AJAX VALIDATION */-->
+        var data = collectFormData($fields);
+
+        var validationUrl = "subscribeth.json";
+        $.post(validationUrl, data, function(response) {
+        	if (response.status == 'FAIL') {
+        		<!-- some fields may be valid, some not */-->
+				for (var i = 0; i < response.errorMessageList.length; i++) {
+					var item = response.errorMessageList[i];
+					console.log(jsChangeEvents[item.fieldName]);
+					if ( (item.fieldName == event.target.id) || (jsChangeEvents[item.fieldName] == "fired")) {
+						var $formGroupDiv = $('#' + item.fieldName + '-form-group');
+						var $formGroupClassDiv = $('#' + item.fieldName + '-form-group-col-div');
+						$formGroupDiv.addClass('has-error');
+						$formGroupClassDiv.append('<span class="glyphicon form-control-feedback glyphicon-remove"></span>');
+						$formGroupClassDiv.append('<span class="help-block">' + item.message + '</div>');
+					}
+				}
+				
+			} 
+        }, "json");
+
+        event.preventDefault();
+        return false;
+    });
+});
+/*]]>*/
+</script>
 </body>
 </html>
