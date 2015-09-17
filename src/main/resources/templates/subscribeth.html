@@ -16,19 +16,15 @@
 <div th:replace="fragments/header :: header" ></div>
 
 <div class="container">  
+	
+	
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h1 th:text="#{subscription.subscribe}" class="panel-title">Subscribe</h1>
+			
 		</div>
 		<div class="panel-body">
 		
-			<span id="helpBlock" class="help-block">
-			Client-side validation using <a href="https://api.jquery.com/focusout/">focusout</a> event triggered AJAX and <a href="http://beanvalidation.org/1.0/spec/">JSR-303</a> 
-			annotated form-backing object. With this we adhere to the <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> principle in the sense that we only 
-			specify validation logic once. The very same JSR-303 form-backing is used for regular HTTP POST based form submission that does not rely on Javascript in any way. 
-			With the latter we also adhere to the principle of <a href="https://en.wikipedia.org/wiki/Progressive_enhancement">Progressive Enhancement</a>.
-			</span>
-				
     		<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
 		
 				<!--/*--> 
@@ -101,6 +97,15 @@
     	</div>   
     	
     </div>
+    <div class="panel panel-default">
+  		<div class="panel-body">
+    		<a tabindex="0" class="btn btn-primary" role="button" data-toggle="popover" data-trigger="focus" data-html="true" title="Form Design Principles" 
+			data-content="Client-side validation using &lt;a href='https://api.jquery.com/focusout/'&gt;focusout&lt;/a&gt; event triggered AJAX and &lt;a href='http://beanvalidation.org/1.0/spec/'&gt;JSR-303&lt;/a&gt; 
+			annotated form-backing object. With this we adhere to the &lt;a href='https://en.wikipedia.org/wiki/Don%27t_repeat_yourself'&gt;DRY&lt;/a&gt; principle in the sense that we only 
+			specify validation logic once. The very same JSR-303 form-backing is used for regular HTTP POST based form submission that does not rely on Javascript in any way. 
+			With the latter we also adhere to the principle of &lt;a href='https://en.wikipedia.org/wiki/Progressive_enhancement'>Progressive Enhancement&lt;/a&gt;.">Technical Info</a>
+  		</div>
+	</div>
     <footer>
         <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
     </footer>
@@ -112,6 +117,10 @@
 <script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
 <script>
 /*<![CDATA[*/
+$(function () {
+  $('[data-toggle="popover"]').popover()
+})
+           
 function collectFormData($fields) {
     var data = {};
     for (var i = 0; i < $fields.length; i++) {
