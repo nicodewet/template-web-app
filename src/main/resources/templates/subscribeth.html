@@ -26,12 +26,10 @@
 			Client-side validation using <a href="https://api.jquery.com/focusout/">focusout</a> event triggered AJAX and <a href="http://beanvalidation.org/1.0/spec/">JSR-303</a> 
 			annotated form-backing object. With this we adhere to the <a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">DRY</a> principle in the sense that we only 
 			specify validation logic once. The very same JSR-303 form-backing is used for regular HTTP POST based form submission that does not rely on Javascript in any way. 
-			With the latter we adhere to the principle of <a href="https://en.wikipedia.org/wiki/Progressive_enhancement">Progressive Enhancement</a>.
+			With the latter we also adhere to the principle of <a href="https://en.wikipedia.org/wiki/Progressive_enhancement">Progressive Enhancement</a>.
 			</span>
 				
-    		
-    	</div>   
-    	<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
+    		<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
 		
 				<!--/*--> 
 				DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors MUST be displayed
@@ -100,6 +98,8 @@
       			</div>
         		
       		</form> 	
+    	</div>   
+    	
     </div>
     <footer>
         <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
