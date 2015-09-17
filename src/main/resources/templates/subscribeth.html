@@ -29,7 +29,9 @@
 			With the latter we adhere to the principle of <a href="https://en.wikipedia.org/wiki/Progressive_enhancement">Progressive Enhancement</a>.
 			</span>
 				
-    		<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
+    		
+    	</div>   
+    	<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
 		
 				<!--/*--> 
 				DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors MUST be displayed
@@ -97,8 +99,7 @@
       				</div>
       			</div>
         		
-      		</form>
-    	</div>    	
+      		</form> 	
     </div>
     <footer>
         <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
