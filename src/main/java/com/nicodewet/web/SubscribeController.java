@@ -24,7 +24,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -43,7 +44,7 @@ import com.nicodewet.web.validation.ValidationResponse;
 @Controller
 public class SubscribeController {
 
-    private static final Logger log = Logger.getLogger(SubscribeController.class);
+    private static final Logger logger = LoggerFactory.getLogger(SubscribeController.class);
 
     public SubscribeController() {
         super();
@@ -64,7 +65,7 @@ public class SubscribeController {
     	if (bindingResult.hasErrors()) {
             return "subscribeth";
         } else {
-        	log.info("JUST ADDED SUBSCRIPTION: " + subscription);
+        	logger.info("JUST ADDED SUBSCRIPTION: " + subscription);
         	model.clear();
         	redirectAttributes.addFlashAttribute("subscribed", "success");
         	return "redirect:/subscribeth";
@@ -73,7 +74,7 @@ public class SubscribeController {
 
     @RequestMapping(value="/subscribeth.json", method=RequestMethod.POST)
     public @ResponseBody ValidationResponse processForm(@Valid final Subscription subscription, final BindingResult bindingResult, final ModelMap model) {
-    	log.info("Validation");
+    	logger.info("Validation");
     	ValidationResponse res = new ValidationResponse();
     	if (!bindingResult.hasErrors()) {
     		res.setStatus("SUCCESS");
