@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<!--  *** STYLE *** -->
+    <title>Template Web App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+    <link href="../static/css/core.css" th:href="@{/css/core.css}"
+          rel="stylesheet" media="screen" />
+</head>
+<body>
+
+	<!--  *** STRUCTURE *** -->
+ 
+<div th:replace="fragments/header :: header" ></div>
+
+<div class="container">  
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h1 th:text="#{insurance.h1}" class="panel-title">Travel Insurance</h1>
+		</div>
+		<div class="panel-body">
+		</div>
+    	
+    </div>
+    <div class="panel panel-default">
+  		<div class="panel-body">
+    		<a tabindex="0" class="btn btn-primary" role="button" data-toggle="popover" data-trigger="focus" data-html="true" title="Form Design Principles" 
+			data-content="To be completed">Technical Info</a>
+  		</div>
+	</div>
+    <footer>
+        <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
+    </footer>
+</div>
+
+	<!-- *** BEHAVIOUR *** -->
+</body>
+</html>

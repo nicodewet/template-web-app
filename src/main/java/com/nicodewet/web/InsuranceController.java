@@ -9,16 +9,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.nicodewet.domain.TravelInsurance;
 
 @Controller
-public class TravelInsuranceController {
+public class InsuranceController {
 
-	private static final Logger logger = LoggerFactory.getLogger(TravelInsuranceController.class);
+	private static final Logger logger = LoggerFactory.getLogger(InsuranceController.class);
 
-	public TravelInsuranceController() {
+	public InsuranceController() {
 	}
 
-    @RequestMapping(value="/subscribeth", method=RequestMethod.GET)
+    @RequestMapping(value="/insurance", method=RequestMethod.GET)
     public String showTravelInsurance(final TravelInsurance travelInsurance) {
-        return "travelinsurance";
+        return "insurance";
     }
 
 

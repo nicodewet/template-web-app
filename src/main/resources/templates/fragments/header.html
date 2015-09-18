@@ -23,9 +23,10 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#" th:href="@{/}">Home</a></li>
-                <li><a href="subscribe.html" th:href="@{/subscribeth}">Subscribe</a></li>
-                <li><a href="table.html" th:href="@{/table}">Table</a></li>
+                <li><a href="#" th:href="@{/}" th:text="#{navbar.home}">Home</a></li>
+                <li><a href="subscribe.html" th:href="@{/subscribeth}" th:text="#{navbar.subscribe}">Subscribe</a></li>
+                <li><a href="insurance.html" th:href="@{/insurance}" th:text="#{navbar.insurance}">Insurance</a></li>
+                <li><a href="table.html" th:href="@{/table}" th:text="#{navbar.table}">Table</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">         
             	<li><a href="?language=en">English</a></li>   	
