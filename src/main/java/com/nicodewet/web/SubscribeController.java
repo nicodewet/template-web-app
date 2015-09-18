@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nicodewet.domain.Subscription;
 import com.nicodewet.domain.SubscriptionType;
@@ -52,22 +54,23 @@ public class SubscribeController {
         return new SubscriptionType[] { SubscriptionType.ALL_EMAILS, SubscriptionType.DAILY_DIGEST };
     }
 
-    @RequestMapping({"/subscribeth"})
+    @RequestMapping(value="/subscribeth", method=RequestMethod.GET)
     public String showSubscription(final Subscription subscription) {
         return "subscribeth";
     }
 
     @RequestMapping(value="/subscribeth", method=RequestMethod.POST)
-    public String subscribe(@Valid final Subscription subscription, final BindingResult bindingResult, final ModelMap model) {
+    public String subscribe(@Valid final Subscription subscription, final BindingResult bindingResult, final ModelMap model, RedirectAttributes redirectAttributes) {
     	if (bindingResult.hasErrors()) {
             return "subscribeth";
-        } else {        	
+        } else {
         	log.info("JUST ADDED SUBSCRIPTION: " + subscription);
         	model.clear();
+        	redirectAttributes.addFlashAttribute("subscribed", "success");
         	return "redirect:/subscribeth";
         }
     }
-    
+
     @RequestMapping(value="/subscribeth.json", method=RequestMethod.POST)
     public @ResponseBody ValidationResponse processForm(@Valid final Subscription subscription, final BindingResult bindingResult, final ModelMap model) {
     	log.info("Validation");

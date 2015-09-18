@@ -17,7 +17,10 @@
 
 <div class="container">  
 	
-	
+	<div class="alert alert-success" role="alert" th:if="${subscribed != null}">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Welcome!</strong>. You have successfully subscribed, we hope you enjoy the service.
+	</div>
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h1 th:text="#{subscription.subscribe}" class="panel-title">Subscribe</h1>
