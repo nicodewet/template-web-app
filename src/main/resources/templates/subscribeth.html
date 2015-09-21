@@ -1,124 +1,170 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<!--  *** STYLE *** -->
-    <title>Template Web App</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen" />
-    <link href="../static/css/core.css" th:href="@{/css/core.css}"
-          rel="stylesheet" media="screen" />
+<!--  *** STYLE *** -->
+<title>Template Web App</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<link href="../static/css/core.css" th:href="@{/css/core.css}"
+	rel="stylesheet" media="screen" />
 </head>
 <body>
 
 	<!--  *** STRUCTURE *** -->
- 
-<div th:replace="fragments/header :: header" ></div>
 
-<div class="container">  
-	
-	<div class="alert alert-success" role="alert" th:if="${subscribed != null}">
-  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  		<strong>Welcome!</strong>. You have successfully subscribed, we hope you enjoy the service.
-	</div>
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h1 th:text="#{subscription.subscribe}" class="panel-title">Subscribe</h1>
-			
+	<div th:replace="fragments/header :: header"></div>
+
+	<div class="container">
+
+		<div class="alert alert-success" role="alert"
+			th:if="${subscribed != null}">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<strong>Welcome!</strong>. You have successfully subscribed, we hope
+			you enjoy the service.
 		</div>
-		<div class="panel-body">
-		
-    		<form method="post" id="subscribe-form" name="subscribe-form" role="form" action="#" th:object="${subscription}" th:action="@{/subscribeth}" class="form-horizontal">
-		
-				<!--/*--> 
-				DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations based validation errors MUST be displayed
-				without requiring Javascript.
-				<!--*/-->
-			
-				<div id="firstname-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
-      				<label for="firstname" th:text="#{subscription.firstname}" class="col-xs-2 col-sm-2 control-label">First name: </label>
-      				<div id="firstname-form-group-col-div" class="col-xs-10 col-sm-4">
-      					<div class="input-group">    	
-      						<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>    
-      						<input type="text" class="form-control" th:field="*{firstname}" th:placeholder="#{subscription.firstname}"/>
-      					</div>
-      					<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('firstname')} ? 'glyphicon-remove'"></span>
-      					<span class="help-block" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">First name</span>
-      				</div>
-      			</div>
-      		
-      			<div id="surname-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('surname')} ? 'has-error'">
-  					<label for="surname" th:text="#{subscription.surname}" class="col-xs-2 col-sm-2 control-label">Surname: </label>
-  					<div id="surname-form-group-col-div" class="col-xs-10 col-sm-4">
-  						<div class="input-group">    
-  							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>    
-  							<input type="text" class="form-control" th:field="*{surname}" th:placeholder="#{subscription.surname}"/>
-  						</div>
-  						<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('surname')} ? 'glyphicon-remove'"></span>
-  						<span class="help-block" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname</span>
-  					</div>
-  				</div>
-			
-  				<div id="email-form-group" class="form-group has-feedback required" th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
-          			<label for="email" th:text="#{subscription.email}" class="col-xs-2 col-sm-2 control-label">Email: </label>
-          			<div id="email-form-group-col-div" class="col-xs-10 col-sm-4">
-          				<div class="input-group">
-          					<span class="input-group-addon">@</span>
-          					<input type="text" class="form-control" th:field="*{email}" th:placeholder="#{subscription.email}"/>
-          				</div>
-          				<span class="glyphicon form-control-feedback" th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>
-          				<span class="help-block" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Incorrect email</span>
-          			</div>
-          		</div>
-        	
-          		<div id="type-form-group" class="form-group">
-          			<label th:text="#{subscription.type}" class="col-xs-2 control-label">Type: </label>
-          		
-          			<div id="type-form-group-col-div" class="col-xs-10">
-          				<div class="radio" th:each="type : ${allTypes}">
-              				<input type="radio" th:field="*{subscriptionType}" th:value="${type}" />
-              					<label th:for="${#ids.prev('subscriptionType')}" 
-              						th:text="#{'subscriptionType.'+${type}}">First type</label>
-              			</div>
-              			<div class="radio" th:remove="all"><input type="radio" /> <label>Second Type</label></div>
-              		</div>	
-              	</div>
-        	
-              	<div class="form-group required">
-              		<div id="firstname-form-group-col-div" class="col-xs-offset-2 col-xs-10">
-              			<span class="text-muted"><em><span class="control-label"></span> Indicates required field</em></span>
-              		</div>
-              	</div> 
-        	
-              	<div class="form-group">
-              		<div class="col-xs-offset-2 col-xs-10">
-      					<button type="submit" name="save" class="btn btn-large btn-success" th:text="#{subscription.submit}">Subscribe me!</button>
-      				</div>
-      			</div>
-        		
-      		</form> 	
-    	</div>   
-    	
-    </div>
-    <div class="panel panel-default">
-  		<div class="panel-body">
-    		<a tabindex="0" class="btn btn-primary" role="button" data-toggle="popover" data-trigger="focus" data-html="true" title="Form Design Principles" 
-			data-content="Client-side validation using &lt;a href='https://api.jquery.com/focusout/'&gt;focusout&lt;/a&gt; event triggered AJAX and &lt;a href='http://beanvalidation.org/1.0/spec/'&gt;JSR-303&lt;/a&gt; 
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h1 th:text="#{subscription.subscribe}" class="panel-title">Subscribe</h1>
+
+			</div>
+			<div class="panel-body">
+
+				<form method="post" id="subscribe-form" name="subscribe-form"
+					role="form" action="#" th:object="${subscription}"
+					th:action="@{/subscribeth}" class="form-horizontal">
+
+					<!--/*-->
+					DESIGN NOTE: Server-side, JSR 303 (Bean Validation) annotations
+					based validation errors MUST be displayed without requiring
+					Javascript.
+					<!--*/-->
+
+					<div id="firstname-form-group"
+						class="form-group has-feedback required"
+						th:classappend="${#fields.hasErrors('firstname')} ? 'has-error'">
+						<label for="firstname" th:text="#{subscription.firstname}"
+							class="col-xs-2 col-sm-2 control-label">First name: </label>
+						<div id="firstname-form-group-col-div" class="col-xs-10 col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-user"></span></span> <input type="text"
+									class="form-control" th:field="*{firstname}"
+									th:placeholder="#{subscription.firstname}" />
+							</div>
+							<span class="glyphicon form-control-feedback"
+								th:classappend="${#fields.hasErrors('firstname')} ? 'glyphicon-remove'"></span>
+							<span class="help-block"
+								th:if="${#fields.hasErrors('firstname')}"
+								th:errors="*{firstname}">First name</span>
+						</div>
+					</div>
+
+					<div id="surname-form-group"
+						class="form-group has-feedback required"
+						th:classappend="${#fields.hasErrors('surname')} ? 'has-error'">
+						<label for="surname" th:text="#{subscription.surname}"
+							class="col-xs-2 col-sm-2 control-label">Surname: </label>
+						<div id="surname-form-group-col-div" class="col-xs-10 col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon"><span
+									class="glyphicon glyphicon-user"></span></span> <input type="text"
+									class="form-control" th:field="*{surname}"
+									th:placeholder="#{subscription.surname}" />
+							</div>
+							<span class="glyphicon form-control-feedback"
+								th:classappend="${#fields.hasErrors('surname')} ? 'glyphicon-remove'"></span>
+							<span class="help-block" th:if="${#fields.hasErrors('surname')}"
+								th:errors="*{surname}">Surname</span>
+						</div>
+					</div>
+
+					<div id="email-form-group" class="form-group has-feedback required"
+						th:classappend="${#fields.hasErrors('email')} ? 'has-error'">
+						<label for="email" th:text="#{subscription.email}"
+							class="col-xs-2 col-sm-2 control-label">Email: </label>
+						<div id="email-form-group-col-div" class="col-xs-10 col-sm-4">
+							<div class="input-group">
+								<span class="input-group-addon">@</span> <input type="text"
+									class="form-control" th:field="*{email}"
+									th:placeholder="#{subscription.email}" />
+							</div>
+							<span class="glyphicon form-control-feedback"
+								th:classappend="${#fields.hasErrors('email')} ? 'glyphicon-remove'"></span>
+							<span class="help-block" th:if="${#fields.hasErrors('email')}"
+								th:errors="*{email}">Incorrect email</span>
+						</div>
+					</div>
+
+					<div id="type-form-group" class="form-group">
+						<label th:text="#{subscription.type}"
+							class="col-xs-2 control-label">Type: </label>
+
+						<div id="type-form-group-col-div" class="col-xs-10">
+							<div class="radio" th:each="type : ${allTypes}">
+								<input type="radio" th:field="*{subscriptionType}"
+									th:value="${type}" /> <label
+									th:for="${#ids.prev('subscriptionType')}"
+									th:text="#{'subscriptionType.'+${type}}">First type</label>
+							</div>
+							<div class="radio" th:remove="all">
+								<input type="radio" /> <label>Second Type</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group required">
+						<div id="firstname-form-group-col-div"
+							class="col-xs-offset-2 col-xs-10">
+							<span class="text-muted"><em><span
+									class="control-label"></span> Indicates required field</em></span>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-xs-offset-2 col-xs-10">
+							<button type="submit" name="save"
+								class="btn btn-large btn-success"
+								th:text="#{subscription.submit}">Subscribe me!</button>
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<a tabindex="0" class="btn btn-primary" role="button"
+					data-toggle="popover" data-trigger="focus" data-html="true"
+					title="Form Design Principles"
+					data-content="Client-side validation using &lt;a href='https://api.jquery.com/focusout/'&gt;focusout&lt;/a&gt; event triggered AJAX and &lt;a href='http://beanvalidation.org/1.0/spec/'&gt;JSR-303&lt;/a&gt; 
 			annotated form-backing object. With this we adhere to the &lt;a href='https://en.wikipedia.org/wiki/Don%27t_repeat_yourself'&gt;DRY&lt;/a&gt; principle in the sense that we only 
 			specify validation logic once. The very same JSR-303 form-backing is used for regular HTTP POST based form submission that does not rely on Javascript in any way. 
-			With the latter we also adhere to the principle of &lt;a href='https://en.wikipedia.org/wiki/Progressive_enhancement'>Progressive Enhancement&lt;/a&gt;.">Technical Info</a>
-  		</div>
+			With the latter we also adhere to the principle of &lt;a href='https://en.wikipedia.org/wiki/Progressive_enhancement'>Progressive Enhancement&lt;/a&gt;.">Technical
+					Info</a>
+			</div>
+		</div>
+		<footer>
+			<div th:replace="fragments/footer :: footer">&copy; 2014 The
+				Static Templates</div>
+		</footer>
 	</div>
-    <footer>
-        <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
-    </footer>
-</div>
 
 	<!-- *** BEHAVIOUR *** -->
 
-<script src="http://cdn.jsdelivr.net/webjars/jquery/1.11.1/jquery.min.js" th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
-<script src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js" th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
-<script>
+	<script
+		src="http://cdn.jsdelivr.net/webjars/jquery/1.11.1/jquery.min.js"
+		th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+	<script
+		src="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/js/bootstrap.min.js"
+		th:src="@{/webjars/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+	<script>
 /*<![CDATA[*/
 $(function () {
   $('[data-toggle="popover"]').popover()

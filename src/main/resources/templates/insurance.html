@@ -1,64 +1,74 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<!--  *** STYLE *** -->
-    <title>Template Web App</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen" />
-    <link href="../static/css/core.css" th:href="@{/css/core.css}"
-          rel="stylesheet" media="screen" />
+<!--  *** STYLE *** -->
+<title>Template Web App</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link
+	href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.5/css/bootstrap.min.css"
+	th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+	rel="stylesheet" media="screen" />
+<link href="../static/css/core.css" th:href="@{/css/core.css}"
+	rel="stylesheet" media="screen" />
 </head>
 <body>
 
 	<!--  *** STRUCTURE *** -->
- 
-<div th:replace="fragments/header :: header" ></div>
 
-<div class="container">  
+	<div th:replace="fragments/header :: header"></div>
 
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			<h1 th:text="#{insurance.h1}" class="panel-title">Travel Insurance</h1>
+	<div class="container">
+
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h1 th:text="#{insurance.h1}" class="panel-title">Travel
+					Insurance</h1>
+			</div>
+			<div class="panel-body"></div>
+
 		</div>
-		<div class="panel-body">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form method="post" id="insurance-form" name="insurance-form"
+					role="form" action="#" th:object="${insurance}"
+					th:action="@{/insurance}" class="form-horizontal">
+
+
+					<div id="destination-form-group" class="form-group">
+
+						<label for="destinationType" class="col-xs-2 control-label">Where
+							are you travelling to?</label>
+
+						<div id="type-form-group-col-div" class="col-xs-10">
+							<div class="radio" th:each="type : ${allTypes}">
+								<input type="radio" th:field="*{destinationType}"
+									th:value="${type}" /> <label
+									th:for="${#ids.prev('destinationType')}"
+									th:text="#{'destinationType.'+${type}}">First type</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-xs-offset-2 col-xs-10">
+							<button type="submit" name="apply"
+								class="btn btn-large btn-success">Apply</button>
+						</div>
+					</div>
+
+				</form>
+
+				<a tabindex="0" class="btn btn-primary" role="button"
+					data-toggle="popover" data-trigger="focus" data-html="true"
+					title="Form Design Principles" data-content="To be completed">Technical
+					Info</a>
+			</div>
 		</div>
-    	
-    </div>
-    <div class="panel panel-default">
-  		<div class="panel-body">
-  			<form method="post" id="insurance-form" name="insurance-form" role="form" action="#" th:object="${insurance}" th:action="@{/insurance}" class="form-horizontal">
-  				
-  				
-  				<div id="destination-form-group" class="form-group">
-  				
-    				<label for="destinationType" class="col-xs-2 control-label">Where are you travelling to?</label>
-    				
-    				<div id="type-form-group-col-div" class="col-xs-10">
-    					<div class="radio" th:each="type : ${allTypes}">
-              					<input type="radio" th:field="*{destinationType}" th:value="${type}" />
-              						<label th:for="${#ids.prev('destinationType')}" 
-              							th:text="#{'destinationType.'+${type}}">First type</label>
-              			</div>
-              		</div>
-  				</div>
-  				
-  				<div class="form-group">
-              		<div class="col-xs-offset-2 col-xs-10">
-      					<button type="submit" name="apply" class="btn btn-large btn-success">Apply</button>
-      				</div>
-      			</div>
-  				
-  			</form>
-  		
-    		<a tabindex="0" class="btn btn-primary" role="button" data-toggle="popover" data-trigger="focus" data-html="true" title="Form Design Principles" 
-			data-content="To be completed">Technical Info</a>
-  		</div>
+		<footer>
+			<div th:replace="fragments/footer :: footer">&copy; 2014 The
+				Static Templates</div>
+		</footer>
 	</div>
-    <footer>
-        <div th:replace="fragments/footer :: footer">&copy; 2014 The Static Templates</div>
-    </footer>
-</div>
 
 	<!-- *** BEHAVIOUR *** -->
 </body>
