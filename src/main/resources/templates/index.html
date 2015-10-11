@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head>
 <title>Template Web App</title>
@@ -23,9 +24,9 @@
 
 	<!-- Container -->
 	<div class="container">
-		<div class="hero-unit">
+		<div th:if="${#httpServletRequest.remoteUser} != null"  class="hero-unit">
 			<h1 th:text="#{welcome}"></h1>
-			<p>Welcome to the Template Web App!</p>
+			<p>Hello <span th:text="${#httpServletRequest.remoteUser}"></span>! Welcome to the Template Web App!</p>
 			<p>
 				<a href="#" th:href="@{properties}"
 					class="btn btn-large btn-success">System Properties</a>

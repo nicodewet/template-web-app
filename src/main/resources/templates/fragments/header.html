@@ -17,8 +17,7 @@
 <body>
 
 	<!-- Navbar -->
-	<div class="navbar navbar-inverse navbar-fixed-top"
-		th:fragment="header">
+	<div class="navbar navbar-inverse navbar-fixed-top" th:fragment="header">
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -38,6 +37,12 @@
 					<li><a href="table.html" th:href="@{/table}"
 						th:text="#{navbar.table}">Table</a></li>
 				</ul>
+				<form class="navbar-form navbar-right" th:if="${#httpServletRequest.remoteUser} != null" th:action="@{/logout}" method="post">
+            		<button type="submit" class="btn btn-large btn-success">Sign Out</button>
+        		</form>
+        		
+				<a href="#" th:href="@{login}" th:if="${#httpServletRequest.remoteUser} == null" role="button" class="btn btn-large btn-success navbar-btn navbar-right" >Login</a>
+				
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="?language=en">English</a></li>
 					<li><a href="?language=de">Deutsch</a></li>
