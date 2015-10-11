@@ -13,6 +13,7 @@ The cited friends include:
 * http://www.thymeleaf.org/[Thymeleaf] as HTML5 templating engine
 * http://blog.getbootstrap.com/2015/06/15/bootstrap-3-3-5-released/[Bootstrap v3.3.5]
 * http://docs.spring.io/spring-framework/docs/current/spring-framework-reference/html/mvc.html[Spring MVC v4.2.0]
+* http://docs.spring.io/spring-security/site/docs/current/reference/htmlsingle/[Spring Security v4.2.0]
 
 Key template aspects include:
 
@@ -22,5 +23,10 @@ Key template aspects include:
 * Bootstrap's responsive, mobile first fluid grid system respected to make sure all devices are supported (i.e. extra small, small, medium and large devices).
 * Intentional avoidance of JSP, JSTL and the Spring tag libraries as per http://www.thymeleaf.org/doc/articles/thvsjsp.html[Spring MVC View Layer: Thymeleaf vs JSP].
 * Internationalization: support for English (for which https://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters[ASCII] would suffice) and at least one language that uses a character set with "funny" characters. This is a http://www.joelonsoftware.com/articles/Unicode.html[character encoding] lesson reminder.
+
+Getting up and running:
+
+* mvn spring-boot:run or run the Application class
+* to log in use the credentials: user and password
 
 
