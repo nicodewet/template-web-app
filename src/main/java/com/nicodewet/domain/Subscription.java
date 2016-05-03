@@ -17,6 +17,8 @@
  */
 package com.nicodewet.domain;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -24,6 +26,10 @@ public class Subscription {
 
   private String firstname;
   private String surname;
+  
+  @Pattern(regexp = "^[\\w-]+(\\.[\\w-]+)*@([a-z0-9-]+(\\.[a-z0-9-]+)*?\\.[a-z]{2,6}|(\\d{1,3}\\.){3}\\d{1,3})(:\\d{4})?$", message = "incorrect email format")
+  @NotEmpty
+  @Email
   private String email;
   private SubscriptionType subscriptionType = SubscriptionType.ALL_EMAILS;
 
@@ -31,8 +37,6 @@ public class Subscription {
     super();
   }
 
-  @NotEmpty
-  @Email
   public String getEmail() {
     return this.email;
   }
